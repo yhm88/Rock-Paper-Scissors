@@ -14,5 +14,12 @@ function getComputerChoice() {
   }
 }
 
-console.log(getRandomInt(3));
-console.log(getComputerChoice());
+// get the user choice
+function getHumanChoice() {
+  let humanChoice = prompt("Please enter your choice.");
+  return humanChoice;
+}
+
+//initilize the human score and computer score
+humanScore = 0;
+coputerScore = 0;
