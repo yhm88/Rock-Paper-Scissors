@@ -1,73 +1,63 @@
-// creat getRandomInt using Math.random
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-// creat getComputerChoice which return the random value
+// apply the random num to make computer randomly return "rock", "papper", "scissors"
 function getComputerChoice() {
-  let randomInt = getRandomInt(3);
+  let randomInt = Math.floor(Math.random() * 3)
+
   if (randomInt === 0) {
-    return "rock";    // if getRandomInt(3) = 0, getComputerChoice returns "rock"
+    return "rock";
   } else if (randomInt === 1) {
-    return "paper";   // if getRandomInt(3) = 1, getComputerChoice returns "paper"
+    return "papper";
   } else {
-    return "scissors" // if getRandomInt(3) = 2, getComputerChoice returns "scissors"
+    return "scissors";
   }
 }
 
-// get the user choice
+// get human choice
 function getHumanChoice() {
-  let humanChoice = prompt("Please enter your choice.");
+  let humanChoice = prompt(`What is your choice?`);
   return humanChoice;
 }
 
-
-
-
-
 function playGame() {
-  //initilize the human score and computer score
-  humanScore = 0;
-  computerScore = 0;
+  // initialize the score of the user and computer
+  let humanScore = 0;
+  let computerScore = 0;
 
-  // play a round
+  // paly a round
   function playRound(humanChoice, computerChoice) {
-    // make humanChoice case-insensitive
     humanChoice = humanChoice.toLowerCase();
 
-    // Determine the winner, log the message, and increment score
     if (humanChoice === computerChoice) {
-      console.log(`It's a tie, your choices are both ${humanChoice}.`)
+      console.log(`It's a tie game, your choices are both ${humanChoice}.`)
     } else if (
       (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "scissors" && computerChoice === "papper") ||
-      (humanChoice === "papper" && computerChoice === "rock")
+      (humanChoice === "papper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "papper")
     ) {
-      humanScore++; // human wins, increment humanScore
-      console.log(`You win, your ${humanChoice} beat computer's ${computerChoice}!`);
+      humanScore++;
+      console.log(`You win, your choice ${humanChoice} beat computer's ${computerChoice}.`);
     } else {
-      computerScore++; // computer wins, increment computerScore
-      console.log(`You lose, computer's ${computerChoice} beat your ${humanChoice}!`);
+      computerScore++;
+      console.log(`You lose, computer's ${computerChoice} beat your ${humanChoice}.`);
     }
   }
 
-  // play the game five times
+  // play 5 rounds
   for (let i = 1; i <= 5; i++) {
-    console.log(`Round ${i}`)
+    console.log(`Round ${i}`);
     const humanSelection = getHumanChoice();
     const computerSelection = getComputerChoice();
-
     playRound(humanSelection, computerSelection);
-    console.log(`Current score - You: ${humanScore}, Computer:${computerScore}`)
+    console.log(`Current score: Your score is ${humanScore}, computer's score is ${computerScore}`)
   }
 
-  // declare the winner
-  console.log("Final results");
+  // final result
+  console.log(`Final result`)
   if (humanScore > computerScore) {
-    console.log(`Congratulations!, you win the entire game! (${humanScore} vs ${computerScore})`);
+    console.log(`Congratulation! You win. ${humanScore} vs ${computerScore}`);
   } else if (humanScore < computerScore) {
-    console.log(`You lose, computer win the entire game! (${humanScore} vs ${computerScore})`);
+    console.log(`You lose. ${humanScore} vs ${computerScore}`);
   } else {
-    console.log(`It's a grand tie game! (${humanScore} vs ${computerScore})`);
+    console.log(`It's a brand tie game. ${humanScore} vs ${computerScore}`);
   }
 }
 
