@@ -5,60 +5,58 @@ function getComputerChoice() {
   if (randomInt === 0) {
     return "rock";
   } else if (randomInt === 1) {
-    return "papper";
+    return "paper";
   } else {
     return "scissors";
   }
 }
 
-// get human choice
-function getHumanChoice() {
-  let humanChoice = prompt(`What is your choice?`);
-  return humanChoice;
-}
+let humanScore = 0;
+let computerScore = 0;
+const roundResultDiv = document.querySelector("#round-result");
+const scoreBoardDiv = document.querySelector("#score-board");
 
-function playGame() {
-  // initialize the score of the user and computer
-  let humanScore = 0;
-  let computerScore = 0;
+// 2. 你的单局对局函数（保留了所有的 console.log）
+function playRound(humanChoice, computerChoice) {
 
-  // paly a round
-  function playRound(humanChoice, computerChoice) {
+    if (humanScore === 5 ||computerScore === 5) {
+      return;
+    }
+    // 统一转换为小写，防止大小写不匹配
     humanChoice = humanChoice.toLowerCase();
+    computerChoice = computerChoice.toLowerCase();
 
     if (humanChoice === computerChoice) {
-      console.log(`It's a tie game, your choices are both ${humanChoice}.`)
+        roundResultDiv.textContent = `It's a tie game, your choices are both ${humanChoice}.`;
     } else if (
-      (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "papper" && computerChoice === "rock") ||
-      (humanChoice === "scissors" && computerChoice === "papper")
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-      humanScore++;
-      console.log(`You win, your choice ${humanChoice} beat computer's ${computerChoice}.`);
+        humanScore++;
+        roundResultDiv.textContent = `You win, your choice ${humanChoice} beat computer's ${computerChoice}.`;
     } else {
-      computerScore++;
-      console.log(`You lose, computer's ${computerChoice} beat your ${humanChoice}.`);
+        computerScore++;
+        roundResultDiv.textContent = `You lose, computer's ${computerChoice} beat your ${humanChoice}.`;
     }
-  }
 
-  // play 5 rounds
-  for (let i = 1; i <= 5; i++) {
-    console.log(`Round ${i}`);
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-    console.log(`Current score: Your score is ${humanScore}, computer's score is ${computerScore}`)
-  }
+    // 每一局打完，在控制台实时打印当前的总比分
+    scoreBoardDiv.textContent = `Current score -> You: ${humanScore} | Computer: ${computerScore}`;
 
-  // final result
-  console.log(`Final result`)
-  if (humanScore > computerScore) {
-    console.log(`Congratulation! You win. ${humanScore} vs ${computerScore}`);
-  } else if (humanScore < computerScore) {
-    console.log(`You lose. ${humanScore} vs ${computerScore}`);
-  } else {
-    console.log(`It's a brand tie game. ${humanScore} vs ${computerScore}`);
-  }
+    if (humanScore === 5) {
+      roundResultDiv.textContent = `You win the game, you reaches the 5 points first.`
+    } else if (computerScore === 5) {
+      roundResultDiv.textContent = `You lose the game, computer reaches the 5 points first.`
+    }
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+
+    const humanSelection = button.id;
+    const computerSelection = getComputerChoice();
+
+    playRound(humanSelection, computerSelection); 
+  })
+})
